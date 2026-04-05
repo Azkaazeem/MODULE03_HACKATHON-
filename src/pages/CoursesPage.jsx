@@ -22,9 +22,12 @@ export const CoursesPage = () => {
 
   return (
     <div className="page-shell py-4">
-      <div className="mb-8">
-        <p className="text-sm font-semibold uppercase tracking-[0.32em] text-violet-200">Courses</p>
-        <h1 className="mt-2 text-4xl font-bold text-white">Available course admissions</h1>
+      <div className="mb-8 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+        <div>
+          <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-violet-200">Courses</p>
+          <h1 className="mt-2 text-4xl font-bold tracking-tight text-white">Available course admissions</h1>
+        </div>
+        <p className="max-w-xl text-sm leading-7 text-slate-400">Browse active admissions, review course descriptions, and apply directly from the portal.</p>
       </div>
 
       {status === 'loading' ? <LoadingSpinner label="Loading courses..." /> : null}

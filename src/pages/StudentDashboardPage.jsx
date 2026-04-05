@@ -33,14 +33,15 @@ export const StudentDashboardPage = () => {
 
   return (
     <div className="page-shell space-y-6 py-4">
-      <Card className="rounded-[32px] p-6 sm:p-8">
-        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+      <Card className="relative overflow-hidden p-6 sm:p-8">
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-emerald-400/55 via-sky-400/35 to-transparent" />
+        <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.32em] text-violet-200">Student Dashboard</p>
-            <h1 className="mt-3 text-3xl font-bold text-white">Hello, {student?.name || 'Student'}</h1>
-            <p className="mt-2 text-sm text-slate-400">View courses, apply for admissions, and manage leave requests.</p>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-violet-200">Student Dashboard</p>
+            <h1 className="mt-3 text-3xl font-bold tracking-tight text-white">Hello, {student?.name || 'Student'}</h1>
+            <p className="mt-2 max-w-2xl text-sm leading-7 text-slate-400">Track your course applications, review leave activity, and manage the key student tasks from one focused workspace.</p>
           </div>
-          <div className="flex gap-3">
+          <div className="flex flex-wrap gap-3">
             <Button onClick={() => setCourseModal(true)} variant="secondary">Apply for Course</Button>
             <Button onClick={() => setLeaveModal(true)}>Request Leave</Button>
             <Button onClick={() => dispatch(logoutStudent())} variant="ghost">Logout</Button>
@@ -50,23 +51,27 @@ export const StudentDashboardPage = () => {
 
       <div className="grid gap-5 md:grid-cols-3">
         <StatCard helper="Currently accepting admissions" label="Open Courses" value={openCourses} />
-        <StatCard helper="Your total history" label="Leave Requests" value={myLeaves.length} />
-        <StatCard helper="Pending decisions" label="Pending" value={myLeaves.filter((item) => item.status === 'Pending').length} />
+        <StatCard helper="Your total leave history" label="Leave Requests" value={myLeaves.length} />
+        <StatCard helper="Waiting for admin decision" label="Pending" value={myLeaves.filter((item) => item.status === 'Pending').length} />
       </div>
 
       <div className="grid gap-6 xl:grid-cols-[1fr_1fr]">
-        <Card className="rounded-[30px] p-6">
-          <div className="mb-5 flex items-center justify-between">
-            <h2 className="text-2xl font-semibold text-white">Courses</h2>
+        <Card className="relative overflow-hidden p-6">
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-emerald-400/55 via-sky-400/35 to-transparent" />
+          <div className="mb-5 flex items-center justify-between gap-3">
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-slate-400">Admissions</p>
+              <h2 className="mt-2 text-2xl font-semibold tracking-tight text-white">Courses</h2>
+            </div>
             {courseState.status === 'loading' ? <LoadingSpinner label="Fetching" /> : null}
           </div>
           <div className="space-y-4">
             {courseState.items.map((course) => (
-              <div className="rounded-[24px] border border-white/8 bg-white/5 p-4" key={course.id}>
+              <div className="border border-white/8 bg-white/5 p-4" key={course.id}>
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <h3 className="font-semibold text-white">{course.name}</h3>
-                    <p className="mt-2 text-sm text-slate-400">{course.description}</p>
+                    <p className="mt-2 text-sm leading-6 text-slate-400">{course.description}</p>
                   </div>
                   <StatusBadge status={course.status} />
                 </div>
@@ -75,8 +80,12 @@ export const StudentDashboardPage = () => {
           </div>
         </Card>
 
-        <Card className="rounded-[30px] p-6">
-          <h2 className="text-2xl font-semibold text-white">Leave History</h2>
+        <Card className="relative overflow-hidden p-6">
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-emerald-400/55 via-sky-400/35 to-transparent" />
+          <div>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.28em] text-slate-400">Attendance</p>
+            <h2 className="mt-2 text-2xl font-semibold tracking-tight text-white">Leave History</h2>
+          </div>
           <div className="mt-5 overflow-x-auto">
             <table className="min-w-full text-left text-sm">
               <thead className="text-slate-400">

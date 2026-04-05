@@ -4,6 +4,14 @@ import { Input } from './Input';
 import { Select } from './Select';
 import { Textarea } from './Textarea';
 
+const EyeIcon = ({ open }) => (
+  <svg aria-hidden="true" className="h-5 w-5" fill="none" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M2 12C3.8 7.8 7.3 5 12 5s8.2 2.8 10 7c-1.8 4.2-5.3 7-10 7S3.8 16.2 2 12Z" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.8" />
+    <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="1.8" />
+    {!open ? <path d="M4 4l16 16" stroke="currentColor" strokeLinecap="round" strokeWidth="1.8" /> : null}
+  </svg>
+);
+
 export const CourseApplicationForm = ({ selectedCourse, courses, onSubmit, loading }) => {
   const [formData, setFormData] = useState({ name: '', cnic: '', courseId: selectedCourse?.id || '' });
 
@@ -35,12 +43,38 @@ export const CourseApplicationForm = ({ selectedCourse, courses, onSubmit, loadi
 
 export const AuthForm = ({ fields, onSubmit, buttonLabel, loading, helper }) => {
   const [formData, setFormData] = useState(Object.fromEntries(fields.map((field) => [field.name, ''])));
+  const [visibleFields, setVisibleFields] = useState({});
+
   return (
     <form className="grid gap-4" onSubmit={(event) => { event.preventDefault(); onSubmit(formData); }}>
-      {helper ? <p className="rounded-2xl border border-amber-400/20 bg-amber-500/10 px-4 py-3 text-sm text-amber-100">{helper}</p> : null}
-      {fields.map((field) => (
-        <Input key={field.name} label={field.label} name={field.name} onChange={(event) => setFormData((current) => ({ ...current, [field.name]: event.target.value }))} placeholder={field.placeholder} required type={field.type || 'text'} value={formData[field.name]} />
-      ))}
+      {helper ? <p className="rounded-2xl border border-amber-400/20 bg-amber-500/10 px-4 py-3 text-sm text-amber-200">{helper}</p> : null}
+      {fields.map((field) => {
+        const isPassword = field.type === 'password';
+        const isVisible = visibleFields[field.name];
+
+        return (
+          <Input
+            key={field.name}
+            label={field.label}
+            name={field.name}
+            onChange={(event) => setFormData((current) => ({ ...current, [field.name]: event.target.value }))}
+            placeholder={field.placeholder}
+            required
+            rightElement={isPassword ? (
+              <button
+                aria-label={isVisible ? 'Hide password' : 'Show password'}
+                className="inline-flex h-9 w-9 items-center justify-center rounded-full text-slate-400 transition hover:bg-white/6 hover:text-white"
+                onClick={() => setVisibleFields((current) => ({ ...current, [field.name]: !current[field.name] }))}
+                type="button"
+              >
+                <EyeIcon open={Boolean(isVisible)} />
+              </button>
+            ) : null}
+            type={isPassword ? (isVisible ? 'text' : 'password') : field.type || 'text'}
+            value={formData[field.name]}
+          />
+        );
+      })}
       <Button className="mt-2" disabled={loading} type="submit">{loading ? 'Please wait...' : buttonLabel}</Button>
     </form>
   );
@@ -56,8 +90,8 @@ export const LeaveForm = ({ onSubmit, loading }) => {
         <Input label="Date To" name="toDate" onChange={(event) => setFormData((current) => ({ ...current, toDate: event.target.value }))} required type="date" value={formData.toDate} />
       </div>
       <label className="block">
-        <span className="mb-2 block text-sm font-medium text-slate-200">Upload Image (optional)</span>
-        <input className="w-full rounded-2xl border border-white/10 bg-slate-950/55 px-4 py-3 text-sm text-slate-100" onChange={(event) => setFormData((current) => ({ ...current, file: event.target.files?.[0] || null }))} type="file" />
+        <span className="mb-2 block text-sm font-medium tracking-[0.01em] text-slate-200">Upload Image (optional)</span>
+        <input className="w-full rounded-2xl border border-white/10 bg-slate-950/65 px-4 py-3.5 text-sm text-slate-100 shadow-[inset_0_1px_0_rgba(255,255,255,0.03)]" onChange={(event) => setFormData((current) => ({ ...current, file: event.target.files?.[0] || null }))} type="file" />
       </label>
       <div className="flex justify-end">
         <Button disabled={loading} type="submit">{loading ? 'Submitting...' : 'Submit Leave'}</Button>

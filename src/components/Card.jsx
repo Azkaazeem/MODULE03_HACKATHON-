@@ -1,3 +1,3 @@
 export const Card = ({ children, className = '' }) => (
-  <div className={`glass-card rounded-[28px] ${className}`}>{children}</div>
+  <div className={`glass-card rounded-[24px] ${className}`}>{children}</div>
 );

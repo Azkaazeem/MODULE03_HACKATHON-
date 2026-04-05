@@ -18,15 +18,17 @@ export const AdminLayout = () => {
             <p className="text-sm uppercase tracking-[0.28em] text-violet-200">Signed In</p>
             <h2 className="mt-2 text-2xl font-bold text-white">{admin?.name || 'Admin User'}</h2>
           </div>
-          <Button
-            onClick={() => {
-              dispatch(logoutAdmin());
-              navigate('/admin/login');
-            }}
-            variant="secondary"
-          >
-            Logout
-          </Button>
+          <div className="flex flex-wrap items-center gap-3">
+            <Button
+              onClick={() => {
+                dispatch(logoutAdmin());
+                navigate('/admin/login');
+              }}
+              variant="secondary"
+            >
+              Logout
+            </Button>
+          </div>
         </div>
         <Outlet />
       </div>

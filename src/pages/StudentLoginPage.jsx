@@ -14,11 +14,12 @@ export const StudentLoginPage = () => {
   if (student) return <Navigate replace to="/student/dashboard" />;
 
   return (
-    <div className="page-shell flex min-h-[70vh] items-center justify-center py-8">
-      <Card className="w-full max-w-xl rounded-[32px] p-8">
-        <p className="text-sm font-semibold uppercase tracking-[0.32em] text-violet-200">Student Login</p>
-        <h1 className="mt-3 text-3xl font-bold text-white">Welcome back</h1>
-        <p className="mt-3 text-sm leading-7 text-slate-400">Login with your CNIC and password to access your dashboard.</p>
+    <div className="page-shell flex min-h-[76vh] items-center justify-center py-10">
+      <Card className="relative w-full max-w-2xl overflow-hidden p-8 sm:p-10">
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-emerald-400/55 via-sky-400/35 to-transparent" />
+        <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-violet-200">Student Login</p>
+        <h1 className="mt-4 text-4xl font-bold tracking-tight text-white">Welcome back</h1>
+        <p className="mt-3 max-w-xl text-sm leading-7 text-slate-400">Sign in with your CNIC and password to access your dashboard, admissions activity, and leave requests.</p>
         <div className="mt-8">
           <AuthForm
             buttonLabel="Login"
@@ -37,7 +38,7 @@ export const StudentLoginPage = () => {
           />
         </div>
         {error ? <p className="mt-4 text-sm text-rose-300">{error}</p> : null}
-        <button className="mt-3 text-sm text-slate-400 underline" onClick={() => dispatch(clearAuthError())} type="button">Clear message</button>
+        <button className="mt-3 text-sm text-slate-400 underline decoration-white/20 underline-offset-4" onClick={() => dispatch(clearAuthError())} type="button">Clear message</button>
         <p className="mt-6 text-sm text-slate-400">Need an account? <Link className="text-violet-200" to="/signup">Signup here</Link></p>
       </Card>
     </div>

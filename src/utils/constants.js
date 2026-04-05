@@ -2,21 +2,21 @@ export const APP_NAME = 'SMIT CONNECT PORTAL';
 export const HOME_UPDATES = [
   {
     id: 1,
-    title: 'Admissions open for Web & App Development',
-    excerpt: 'New batches are now available for Karachi campus. Students can apply directly from the portal.',
+    title: 'Admissions are open for current technology and vocational tracks',
+    excerpt: 'Students can explore available courses, review descriptions, and apply through one guided portal flow.',
     date: 'Today',
   },
   {
     id: 2,
-    title: 'Leave requests now tracked online',
-    excerpt: 'Students can submit leave with optional evidence and follow approval status in real time.',
-    date: 'Yesterday',
+    title: 'Leave requests can now be submitted with clearer tracking',
+    excerpt: 'Students can request leave, attach supporting files, and check approval status without repeated follow-up.',
+    date: 'This Week',
   },
   {
     id: 3,
-    title: 'Admin operations streamlined',
-    excerpt: 'Bulk student upload, course management, and leave approvals are available from one dashboard.',
-    date: 'This Week',
+    title: 'Administrative review is now more organized and faster to handle',
+    excerpt: 'The admin side centralizes student records, admissions activity, and leave approvals in one dashboard.',
+    date: 'Latest',
   },
 ];
 
