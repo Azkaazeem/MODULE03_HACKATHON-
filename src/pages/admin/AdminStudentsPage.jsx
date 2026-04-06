@@ -15,9 +15,9 @@ export const AdminStudentsPage = () => {
   }, []);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6" data-motion="page-shell">
       <Topbar subtitle="Upload Excel files and manage the student registry." title="Student Management" />
-      <Card className="rounded-[30px] p-6">
+      <Card className="rounded-[30px] p-6" data-motion="card" data-origin="left">
         <label className="block rounded-[24px] border border-dashed border-white/12 bg-white/4 p-6 text-sm text-slate-300">
           <span className="mb-3 block font-semibold text-white">Upload Excel file</span>
           <input
@@ -45,7 +45,7 @@ export const AdminStudentsPage = () => {
         </label>
       </Card>
 
-      <Card className="rounded-[30px] p-6">
+      <Card className="rounded-[30px] p-6" data-motion="table" data-origin="up">
         {!students.length ? <EmptyState description="Uploaded students will appear in this table." title="No students yet" /> : (
           <div className="overflow-x-auto">
             <table className="min-w-full text-left text-sm">

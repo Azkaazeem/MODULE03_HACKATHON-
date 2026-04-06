@@ -1,35 +1,40 @@
-import { createContext, useCallback, useContext, useMemo, useState } from 'react';
+import { createContext, useCallback, useContext, useMemo } from 'react';
+import Swal from 'sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 const ToastContext = createContext({ showToast: () => {} });
 
-export const ToastProvider = ({ children }) => {
-  const [toasts, setToasts] = useState([]);
+const popupBase = {
+  background: '#0d1f17',
+  color: '#edf7f0',
+  confirmButtonColor: '#22a559',
+  customClass: {
+    popup: 'smit-popup',
+    title: 'smit-popup-title',
+    htmlContainer: 'smit-popup-body',
+    confirmButton: 'smit-popup-confirm',
+  },
+};
 
+export const ToastProvider = ({ children }) => {
   const showToast = useCallback((message, type = 'success') => {
-    const id = Date.now();
-    setToasts((current) => [...current, { id, message, type }]);
-    setTimeout(() => {
-      setToasts((current) => current.filter((toast) => toast.id !== id));
-    }, 2600);
+    const icon = type === 'error' ? 'error' : type === 'warning' ? 'warning' : 'success';
+
+    return Swal.fire({
+      ...popupBase,
+      toast: true,
+      position: 'top-end',
+      timer: 2600,
+      timerProgressBar: true,
+      showConfirmButton: false,
+      icon,
+      title: message,
+    });
   }, []);
 
   const value = useMemo(() => ({ showToast }), [showToast]);
 
-  return (
-    <ToastContext.Provider value={value}>
-      {children}
-      <div className="fixed right-4 top-4 z-[60] flex w-[min(360px,calc(100%-2rem))] flex-col gap-3">
-        {toasts.map((toast) => (
-          <div
-            className={`glass-card rounded-2xl px-4 py-3 text-sm shadow-lg ${toast.type === 'error' ? 'border-rose-400/25 text-rose-100' : 'border-emerald-400/20 text-slate-100'}`}
-            key={toast.id}
-          >
-            {toast.message}
-          </div>
-        ))}
-      </div>
-    </ToastContext.Provider>
-  );
+  return <ToastContext.Provider value={value}>{children}</ToastContext.Provider>;
 };
 
 export const useToast = () => useContext(ToastContext);

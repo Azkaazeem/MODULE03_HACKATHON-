@@ -23,9 +23,9 @@ export const AdminLeavesPage = () => {
   }, [dispatch]);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6" data-motion="page-shell">
       <Topbar subtitle="Review all leave requests and take action with confirmation." title="Leave Management" />
-      <Card className="rounded-[30px] p-6">
+      <Card className="rounded-[30px] p-6" data-motion="table" data-origin="up">
         {!leaves.length ? <EmptyState description="New leave requests will show here." title="No leave requests" /> : (
           <div className="overflow-x-auto">
             <table className="min-w-full text-left text-sm">
@@ -44,7 +44,7 @@ export const AdminLeavesPage = () => {
                     <td className="py-4 pr-4 text-slate-400">{formatDate(leave.fromDate)} - {formatDate(leave.toDate)}</td>
                     <td className="py-4 pr-4"><StatusBadge status={leave.status} /></td>
                     <td className="py-4">
-                      <div className="flex flex-wrap gap-2">
+                      <div className="flex flex-wrap gap-2" data-wave="soft">
                         <Button onClick={() => setSelectedLeave(leave)} type="button" variant="secondary">View</Button>
                         <Button onClick={() => setConfirm({ open: true, status: 'Approved', leaveId: leave.id })} type="button">Approve</Button>
                         <Button onClick={() => setConfirm({ open: true, status: 'Rejected', leaveId: leave.id })} type="button" variant="danger">Reject</Button>

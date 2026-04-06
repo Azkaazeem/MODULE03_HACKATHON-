@@ -18,7 +18,7 @@ export const AdminCoursesPage = () => {
   }, [dispatch]);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6" data-motion="page-shell">
       <Topbar actionLabel="Add Course" onAction={() => setEditingCourse({ name: '', description: '', status: 'Open' })} subtitle="Add or update courses using modal forms." title="Course Management" />
       <div className="grid gap-5 md:grid-cols-2">
         {courses.map((course) => (

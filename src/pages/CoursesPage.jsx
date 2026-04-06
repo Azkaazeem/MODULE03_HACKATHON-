@@ -1,10 +1,11 @@
-import { useEffect, useMemo, useState } from 'react';
+﻿import { useEffect, useMemo, useRef, useState } from 'react';
 import { CourseApplicationForm } from '../components/Forms';
 import { CourseCard } from '../components/CourseCard';
 import { EmptyState } from '../components/EmptyState';
 import { LoadingSpinner } from '../components/LoadingSpinner';
 import { Modal } from '../components/Modal';
 import { useToast } from '../components/ToastProvider';
+import { usePortalMotion } from '../hooks/usePortalMotion';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { fetchCourses, submitApplication } from '../redux/slices/courseSlice';
 
@@ -13,6 +14,9 @@ export const CoursesPage = () => {
   const { showToast } = useToast();
   const { items, status } = useAppSelector((state) => state.courses);
   const [selectedCourse, setSelectedCourse] = useState(null);
+  const pageRef = useRef(null);
+
+  usePortalMotion(pageRef);
 
   useEffect(() => {
     dispatch(fetchCourses());
@@ -21,10 +25,13 @@ export const CoursesPage = () => {
   const sortedCourses = useMemo(() => [...items].sort((a, b) => a.name.localeCompare(b.name)), [items]);
 
   return (
-    <div className="page-shell py-4">
-      <div className="mb-8">
-        <p className="text-sm font-semibold uppercase tracking-[0.32em] text-violet-200">Courses</p>
-        <h1 className="mt-2 text-4xl font-bold text-white">Available course admissions</h1>
+    <div className="page-shell py-4" data-motion="page-shell" ref={pageRef}>
+      <div className="mb-8 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+        <div>
+          <p className="text-[11px] font-semibold uppercase tracking-[0.32em] text-violet-200" data-motion="copy">Courses</p>
+          <h1 className="mt-2 text-4xl font-bold tracking-tight text-white" data-motion="heading">Available course admissions</h1>
+        </div>
+        <p className="max-w-xl text-sm leading-7 text-slate-400" data-motion="copy">Browse active admissions, review course descriptions, and apply directly from the portal.</p>
       </div>
 
       {status === 'loading' ? <LoadingSpinner label="Loading courses..." /> : null}
