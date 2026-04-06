@@ -24,8 +24,8 @@ export const AdminLoginPage = () => {
           <AuthForm
             buttonLabel="Login"
             fields={[
-              { name: 'username', label: 'Username' },
-              { name: 'password', label: 'Password', type: 'password' },
+              { name: 'username', label: 'Username', placeholder: 'admin' },
+              { name: 'password', label: 'Password', type: 'password', placeholder: 'admin123' },
             ]}
             loading={status === 'loading'}
             onSubmit={async (values) => {
